@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/userservice/src/main/java/com/fitness/userservice/repository/UserRepository.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/userservice/src/main/java/com/fitness/userservice/repository/UserRepository.java" />
+              <option name="originalContent" value="package com.fitness.userservice.repository;&#10;&#10;import com.fitness.userservice.model.User;&#10;import org.springframework.data.jpa.repository.JpaRepository;&#10;import org.springframework.stereotype.Repository;&#10;&#10;@Repository&#10;public interface UserRepository extends JpaRepository&lt;User, String&gt; {&#10;    boolean existsByEmail(String email);&#10;&#10;    Boolean existsByKeycloakId(String userId);&#10;&#10;    User findByEmail(String email);&#10;}" />
+              <option name="updatedContent" value="package com.fitness.userservice.repository;&#10;&#10;import com.fitness.userservice.model.User;&#10;import org.springframework.data.jpa.repository.JpaRepository;&#10;import org.springframework.stereotype.Repository;&#10;&#10;@Repository&#10;public interface UserRepository extends JpaRepository&lt;User, String&gt; {&#10;    boolean existsByEmail(String email);&#10;&#10;    Boolean existsByKeycloakId(String userId);&#10;&#10;    User findByEmail(String email);&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

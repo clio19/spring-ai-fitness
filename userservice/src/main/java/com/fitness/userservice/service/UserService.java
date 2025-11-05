@@ -5,14 +5,17 @@ import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 @Slf4j
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
 
     public UserResponse register(RegisterRequest request) {
@@ -70,6 +73,25 @@ public class UserService {
 
     public Boolean existByUserId(String userId) {
         log.info("Calling User Validation API for userId: {}", userId);
-        return repository.existsByKeycloakId(userId);
+        if (userId == null || userId.isBlank()) {
+            log.info("Provided userId is null or blank");
+            return false;
+        }
+
+        // First check if the provided value is the internal id (most common case)
+        if (repository.existsById(userId)) {
+            log.info("User found by internal id");
+            return true;
+        }
+
+        // Next check if the provided value matches keycloakId (external id)
+//        User byKeycloak = repository.findByKeycloakId(userId);
+//        if (byKeycloak != null) {
+//            log.info("User found by keycloakId");
+//            return true;
+//        }
+
+        log.info("User not found by either keycloakId or internal id");
+        return false;
     }
 }

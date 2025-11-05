@@ -20,9 +20,9 @@ public class ActivityController {
     public ResponseEntity<ActivityResponse> trackActivity(@RequestBody ActivityRequest request,
                                                           // @RequestHeader("X-User-ID")
                                                           String userId){
-//        if (userId != null) {
-//            request.setUserId(userId);
-//        }
+        if (userId != null) {
+            request.setUserId(userId);
+        }
         return ResponseEntity.ok(activityService.trackActivity(request));
     }
 
