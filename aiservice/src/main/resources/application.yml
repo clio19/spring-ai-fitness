@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: aiservice
+  data:
+    mongodb:
+      # Use environment variables for credentials. Let the driver negotiate the auth mechanism
+      # (remove authMechanism to avoid forcing SCRAM-SHA-1 which can fail if the user uses SCRAM-SHA-256).
+      uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin
+      # Alternative (if your Mongo user requires SCRAM-SHA-256):
+      # uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin&authMechanism=SCRAM-SHA-256
+      database: aiactivityfitness
+  cloud:
+    inetutils:
+      preferredNetworks:
+        - 192.168       # mantém, se o teu IP local for dessa gama
+      default-hostname: aiservice
+      default-ip-address: 127.0.0.1  # força fallback local
+
+server:
+  port: 8083
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1   # força o uso do IP e ignora o hostname
+    instance-id: ${spring.application.name}:${server.port}
