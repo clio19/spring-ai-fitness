@@ -9,5 +9,9 @@ spring:
       # Alternative (if your Mongo user requires SCRAM-SHA-256):
       # uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin&authMechanism=SCRAM-SHA-256
       database: aiactivityfitness
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 server:
   port: 8082
