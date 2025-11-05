@@ -3,10 +3,8 @@ package com.fitness.userservice.controller;
 import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.service.UserService;
-import com.fitness.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUserProfile(@PathVariable String userId){
@@ -28,8 +26,8 @@ public class UserController {
     }
 
 
-//    @GetMapping("/{userId}/validate")
-//    public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
-//        return ResponseEntity.ok(userService.existByUserId(userId));
-//    }
+    @GetMapping("/{userId}/validate")
+    public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
+        return ResponseEntity.ok(userService.existByUserId(userId));
+    }
 }
