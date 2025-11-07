@@ -1,48 +1,5 @@
 spring:
   application:
-    name: aiservice
-  data:
-    mongodb:
-      # Use environment variables for credentials. Let the driver negotiate the auth mechanism
-      # (remove authMechanism to avoid forcing SCRAM-SHA-1 which can fail if the user uses SCRAM-SHA-256).
-      uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin
-      # Alternative (if your Mongo user requires SCRAM-SHA-256):
-      # uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin&authMechanism=SCRAM-SHA-256
-      database: aiactivityfitness
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: activity-processor-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.use.type.headers: false
-        spring.json.value.default.type: com.fitness.aiservice.model.Activity
-        spring.json.trusted.packages: "*"
-
-gemini:
-  api:
-    url: ${GEMINI_URL}
-    key: ${GEMINI_KEY}
-
-kafka:
-  topic:
-    name: activity-events
-  cloud:
-    inetutils:
-      preferredNetworks:
-        - 192.168       # mant�m, se o teu IP local for dessa gama
-      default-hostname: aiservice
-      default-ip-address: 127.0.0.1  # for�a fallback local
-
-server:
-  port: 8083
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
-    ip-address: 127.0.0.1   # for�a o uso do IP e ignora o hostname
-    instance-id: ${spring.application.name}:${server.port}
+    name: ai-service
+  config:
+    import: optional:configserver:http://${CONFIG_SERVER_HOST:localhost}:${CONFIG_SERVER_PORT:8888}

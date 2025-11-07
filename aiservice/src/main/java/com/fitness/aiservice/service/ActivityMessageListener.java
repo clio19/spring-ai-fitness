@@ -14,19 +14,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ActivityMessageListener {
 
+
+    private final ActivityAIService activityAIService;
+    private final RecommendationRepository recommendationRepository;
+
     @KafkaListener(topics = "${kafka.topic.name}", groupId = "activity-processor-group")
     public void processActivity(Activity activity) {
         log.info("Received Activity for processing: {}", activity.getUserId());
-        // Placeholder for AI recommendation generation logic
-        log.info("Processing activity {} for user {}", activity.getId(), activity.getUserId());
+        Recommendation recommendation = activityAIService.generateRecommendation(activity);
+        recommendationRepository.save(recommendation);
     }
-//    private final ActivityAIService activityAIService;
-//    private final RecommendationRepository recommendationRepository;
-//
-//    @KafkaListener(topics = "${kafka.topic.name}", groupId = "activity-processor-group")
-//    public void processActivity(Activity activity) {
-//        log.info("Received Activity for processing: {}", activity.getUserId());
-//        Recommendation recommendation = activityAIService.generateRecommendation(activity);
-//        recommendationRepository.save(recommendation);
-//    }
 }
