@@ -5,12 +5,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://${KEY_CLOAK_HOST:localhost}:${KEY_CLOAK_PORT:8181}/realms/fitness-oauth2/protocol/openid-connect/certs
-
-logging:
-  level:
-    org.springframework.security: DEBUG
-    com.fitness.gateway: DEBUG
+          jwk-set-uri: http://${KEY_CLOAK_HOST:localhost}:${KEY_CLOAK_PORT:8181}/realms/fitness-app/protocol/openid-connect/certs
   cloud:
     gateway:
       routes:

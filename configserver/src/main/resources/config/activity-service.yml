@@ -3,15 +3,18 @@ spring:
     mongodb:
       # Use environment variables for credentials. Let the driver negotiate the auth mechanism
       # (remove authMechanism to avoid forcing SCRAM-SHA-1 which can fail if the user uses SCRAM-SHA-256).
-      uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/aiactivityfitness?authSource=admin
-      # Alternative (if your Mongo user requires SCRAM-SHA-256):
-      # uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@192.168.1.106:27017/aiactivityfitness?authSource=admin&authMechanism=SCRAM-SHA-256
+      uri: mongodb://${MONGO_USER:root}:${MONGO_PASS:example}@${MONGO_HOST:192.168.1.106}:${MONGO_PORT:27017}/aiactivityfitness?authSource=admin
       database: aiactivityfitness
   kafka:
     bootstrap-servers: ${KAFKA_HOST:localhost}:${SERVER_PORT:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://${KEY_CLOAK_HOST:localhost}:${KEY_CLOAK_PORT:8181}/realms/fitness-app/protocol/openid-connect/certs
 
 
 kafka:
@@ -25,3 +28,8 @@ eureka:
 
 server:
   port: 8082
+
+# local fallback for user validation (can be overridden with env or config server)
+user:
+  service:
+    base-url: http://localhost:8081
